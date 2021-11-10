@@ -32,10 +32,13 @@ public class UserController {
     @PutMapping("/{userId}")
     public void editUser(@PathVariable Long userId, @RequestBody User user) {
         User userToUpdate = userService.getUserById(userId);
+        List<String> userToUpdateInterests = userToUpdate.getInterests();
+        userToUpdateInterests.addAll(user.getInterests());
 
         userToUpdate.setFirstName(user.getFirstName());
         userToUpdate.setLastName(user.getLastName());
         userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setInterests(userToUpdateInterests);
 
         userService.addUser(userToUpdate);
 
